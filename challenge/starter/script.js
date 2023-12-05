@@ -92,44 +92,74 @@ var upperCasedCharacters = [
 function getPasswordOptions() {
   var lengthOfPassword = prompt("Enter the length of the password. It must be between 8 and 128 characters:");
 
-  // Use logical operators to authenticate input for the lenght of the password
+  // Use logical operators to authenticate input for the length of the password
   if (lengthOfPassword < 8 || lengthOfPassword > 128 || isNaN(lengthOfPassword)) {
     console.log("Invalid password length entered by the user.");
     alert("Password length is not valid. Please enter a number of characters between 8 and 128.");
-    return; 
-}
+    return;
+  }
 
+  var includeLowercase = confirm("Include lowercase characters?");
+  var includeUppercase = confirm("Include uppercase characters?");
+  var includeNumbers = confirm("Include numeric characters?");
+  var includeSpecialChars = confirm("Include special characters?");
 
-var includeLowercase = confirm("Include lowercase characters?");
-var includeUppercase = confirm("Include uppercase characters?");
-var includeNumeric = confirm("Include numeric characters?");
-var includeSpecial = confirm("Include special characters?");
+  // Ensure that at least one character type will be used by the user
+  if (!includeLowercase && !includeUppercase && !includeNumbers && !includeSpecialChars) {
+    console.log("No character type selected by the user.");
+    alert("Please select at least one character type.");
+    return;
+  }
 
-// Ensure that at least one character type will be used by the user
-if (!includeLowercase && !includeUppercase && !includeNumeric && !includeSpecial) {
-  console.log("No character type selected by the user.");
-  alert("Please select at least one character type.");
-  return;
-}
-
-console.log("User input received successfully.");
-return {
-  length: passwordLength,
-  includeLowercase: includeLowercase,
-  includeUppercase: includeUppercase,
-  includeNumeric: includeNumeric,
-  includeSpecial: includeSpecial
-};
+  console.log("The user's input has been received without any errors.");
+  return {
+    length: lengthOfPassword,
+    includeLowercase: includeLowercase,
+    includeUppercase: includeUppercase,
+    includeNumbers: includeNumbers,
+    includeSpecialChars: includeSpecialChars,
+  };
 }
 
 // Function for getting a random element from an array
 function getRandom(arr) {
+  console.log("obtaining an index at random from the array...");
 
+  var randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
 }
 
 // Function to generate password with user input
 function generatePassword() {
+  var options = getPasswordOptions ();
 
+  var allChars = [];
+  var password = "";
+
+  if (options.includeLowercase) {
+    allChars = allChars.concat(lowerCasedCharacters);
+    password += getRandom(lowerCasedCharacters);
+  }
+
+  if (options.includeUppercase) {
+     allChars = allChars.concat(upperCasedCharacters);
+     password += getRandom(upperCasedCharacters);
+  }
+  if (options.includeNumbers) {
+    allChars = allChars.concat(numericCharacters);
+    password += getRandom(numericCharacters);
+  }
+  if (options.includeSpecialChars) {
+    allChars = allChars.concat(specialCharacters);
+    password += getRandom(specialCharacters);
+  }
+
+  for (var i = password.length; i < options.length; i++) {
+    password += getRandom(allChars);
+  }
+
+  console.log("Password successfully inputed");
+  return password;
 }
 
 // Get references to the #generate element
