@@ -18,4 +18,3 @@ On line 93 of my script.js file i used the parseInt(...) function that i found o
 
 - [Password-Generator](https://hamdishh.github.io/Password-Generator/)
 
-## Author
