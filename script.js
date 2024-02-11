@@ -121,7 +121,7 @@ function getPasswordOptions() {
 // Function to generate password with user input
 function generatePassword() {
   var options = getPasswordOptions();
-  if (!options) return ""; // Exit if options are invalid or not provided
+  if (!options) return ""; // exit if options are invalid or not provided
 
   var allChars = [];
   var password = "";
